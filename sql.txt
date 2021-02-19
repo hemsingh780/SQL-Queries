@@ -1,0 +1,360 @@
+Select first_name from customer_table;
+select first_name , last_name from customer_table;
+select*from customer_table;
+
+select distinct first_name from customer_table;
+select first_name from customer_table;
+
+select distinct first_name , age from customer_table;
+
+insert into customer_table values
+(1,'hem','singh',32,'abd@.com');
+select * from customer_table;
+
+select distinct * from customer_table;
+
+select first_name from customer_table where age=25;
+
+-- you can also find the distinct value 
+select distinct first_name from customer_table where age=25;
+select distinct first_name from customer_table where age>25;
+select*from customer_table where first_name='hem'; 
+
+-- AND & OR operator in sql
+
+select first_name , last_name , age from customer_table where age>20 and age<30;
+
+select * from customer_table;
+
+select first_name , last_name , age from customer_table where age<20 or age>=30;
+
+select*from customer_table where not age=25;
+
+select* from customer_table where not age = 25 and not first_name='hem';
+
+
+------------------------------second day---------------------------------------
+
+select*from customer_table;
+select*from customer_table where cust_id = 2;
+update customer_table set last_name='hey' , age = 18 where cust_id=2;
+select*from customer_table;
+update customer_table set first_name='gee' where cust_id = 5;
+update customer_table set email_id='gee@h.com' where first_name='Gee' or first_name = 'gee';
+delete from customer_table where cust_id=1;
+select*from customer_table ;
+delete from customer_table where age>30;
+-- if you want delete everything in your table so you use
+-- delete from customer_table;
+-- so we can use to add a column in our table to use add
+alter table customer_table add test varchar(255);
+-- so we can use to delete a column in our table so we use drop command
+alter table customer_table drop test;
+alter table customer_table drop column test;
+-- to change the data type of a column
+alter table customer_table alter column age type varchar(244);
+-- to change the name of a cloumn 
+alter table customer_table rename column email_id to customer_email;
+select*from customer_table;
+-- constraint
+alter table customer_table alter column cust_id set  not null;
+insert into customer_table (first_name,age) values
+('hem','45');
+alter table customer_table alter column cust_id drop not null;
+insert into customer_table (first_name,last_name,age,customer_email) values
+('aa','bb','25','ab@xyz.com');
+select * from customer_table;
+alter table customer_table add constraint cust_id check (cust_id>0);
+insert into customer_table values
+(-1,'cc','dd','67','cd@xyz.com');
+alter table customer_table add primary key (cust_id);
+insert into customer_table values
+(1,'cc','dd','67','cd@xyz.com');
+select*from customer_table;
+delete from customer_table;
+alter table customer_table add primary key (cust_id);
+
+
+---------------------------------------------------science_class----------------------------------------------------------------------------
+
+select*from science_class;
+
+select name from science_class where science_marks>60;
+select*from science_class where science_marks>35 and science_marks<60;
+select*from science_class where science_marks<=35 or science_marks>=60;
+update science_class set science_marks = 45 where name='Popeye';
+delete from science_class where name='Robb';
+alter table science_class rename column name to student_name;
+
+
+
+-------------------------------------------------------------DAY 3----------------------------------------------------------------------------------------------
+
+
+select*from customer;
+select*from customer where city in('Philadelphia','Seattle');
+select*from customer where city ='Philadelphia' or city='Seattle';
+
+/*Between*/
+select*from customer where age between 20 and 30;
+select*from customer where age>=20 and age<=30;
+select*from customer where age not between 20 and 30;
+select*from sales where ship_date between '2015-04-01' and '2016-04-01';
+
+-------Like command
+select*from customer where customer_name like 'J%';
+select*from customer where customer_name Like '%Nelson%';
+select * from customer where customer_name Like '____ %';
+select distinct city from customer where city NOT Like 'S%';
+select*from customer;
+select distinct city from customer where region in('North','East');
+-----------sales
+select *from sales;
+select * from sales where sales between 100 and 500;
+--------------customer
+select*from customer where customer_name like '% ____';
+
+----------Order by Condition in sql
+select *from customer where state='California' order by customer_name;
+
+------------In desending
+select *from customer where state='California' order by customer_name desc;
+select *from customer order by city asc,customer_name desc; 
+select * from customer order by 2 asc;
+select * from customer order by age desc;
+-------------Limit
+select * from customer where age>25 order by age desc limit 8; 
+select * from customer where age>25 order by age asc limit 10;
+---lets move into sales 
+select * from sales where discount>0 order by discount desc;
+select * from sales where discount>0 order by discount desc limit 10;
+
+
+-----------------------------------------------------------------------------------DAY - 3-------------------------------------------------------------------------------------------------
+select*from customer;
+select customer_id as "Serial Number" , customer_name as name, age as customer_age from customer;
+
+/*COUNT*/
+select*from sales;
+select count(sales) from sales;
+
+select count(*) from sales;
+select count (order_line) as "Number of PRoducts ordered", count (distinct order_id) as "Number of Orders"
+from sales where customer_id = 'CG-12520';
+
+/*SUM*/
+select sum(profit) as Total_profit from sales;
+select sum(quantity) as "Total quantity" from sales where product_id = 'FUR-TA-10000577';
+
+
+/*AVERAGE*/
+select avg(age) as "Average customer age" from customer;
+select avg(sales*.10) "Average commision value" from sales;
+
+/*MIN & MAX*/
+select min(sales) as "minimum sales value june 15" from sales 
+where order_date 
+between '2015-06-01' and '2015-06-30';
+
+select sales 
+from sales 
+where order_date between '2015-06-01' and '2015-06-30' order by sales asc;
+
+select max(sales) as "maximum sales value june 15" from sales 
+where order_date 
+between '2015-06-01' and '2015-06-30';
+
+/*Exercise 8*/
+select sum(sales) as "total sales" from sales;
+select* from sales;
+select*from customer;
+select count(customer_name) from customer where region='north' or age>20 and age<30;
+select avg(age) as "Average customer age" from customer where region='East' ;
+select min(age) as "Minimum age in Philadelphia" from customer where city='Philadelphia' ;
+select max(age) as "Maximum age in Philadelphia" from customer where city='Philadelphia' ;
+
+------------------------------------------DAY-4------------------------------------------------------------------
+------------------------------------------GROUP BY---------------------------------------------------------------
+select * from customer;
+
+select region, count(customer_id) as customer_count from customer group by region;
+
+select *from sales;
+
+select product_id,sum(quantity) as quantity_sold from sales group by product_id order by quantity_sold desc;
+select customer_id ,min(sales) as "Minimum sales" , max(sales) as "Maximum sales" , avg(sales) as "Average sales" , sum(sales) as "Total sales"
+from sales group by customer_id
+order by "Total sales" desc
+limit 5;
+
+------------------------------------------HAVING------------------------------------------------------------------
+select region, count(customer_id) as customer_count from customer group by region having count(customer_id)>200;
+select region , count(customer_id) as customer_count from customer where customer_name like'A%' group by region;
+select region , count(customer_id) as customer_count from customer where customer_name like'A%' group by region having count(customer_id)>15;
+
+------------------------------------------EXERCISE----------------------------------------------------------------
+/*a)Make a dashboard showing the following figures for each products ID
+1)total sales (in $) order by this column in desending
+2)total sales quantity
+3)Numbers of orders 
+4)Max sales value
+5)Min sales value
+6)Average sales value
+b)Get the list of products ID's where the quantity of product sold is greater than 10*/
+select * from sales; 
+select sum(sales) as "Total sales",sum(quantity) as "Total sales quantity",count(order_id) as "Numbers of orders",
+min(sales) as "Minimum sales value" , Max(sales) as "Maximum sales value" , Avg(sales) as "Average sales value" from sales group by product_id order by "Total sales" desc;
+select product_id, count(order_id) as "product sold" from sales group by product_id having count(quantity)>10; 
+
+---------------------------------------conditional statement----------------------------------------------------------
+select * , case
+            when age<30 then 'young'
+			when age>60 then 'senior citizen'
+		    else 'Middle aged'
+			end as Aged_category
+from customer;
+
+
+
+-------------------------------------------------------DAY-5---------------------------------------------------------
+-------------------------------------------------------JOINS---------------------------------------------------------
+
+/*creating sales table of year 2015*/
+
+create table sales_2015 as select*from sales where ship_date between '2015-01-01' and '2015-12-31';
+select count(*) from sales_2015;
+select count(distinct customer_id) from sales_2015;
+
+/*customer with age between 20 and 60*/
+create table customer_20_60 as select * from customer where age between 20 and 60;
+select count(*) from customer_20_60;
+
+
+---------------------------------------------------------- DAY-6 -----------------------------------------------------------
+---------------------------------------------------------- INNER JOIN ------------------------------------------------------
+SELECT 
+  a.order_line,
+  a.product_id,
+  a.customer_id,
+  a.sales,
+  b.customer_name,
+  b.age
+  from sales_2015 as a
+  inner join customer_20_60 as b
+  on a.customer_id = b.customer_id
+  order by customer_id;
+  
+  select * from sales_2015; 
+  
+---------------------------------------------------------- LEFT JOIN -------------------------------------------------------
+ 
+
+ /* AA-10315 not present in customer_20_60 table
+    AA-10375 present in both 
+	AA-10480  not present in sales_2015*/	
+	SELECT 
+  a.order_line,
+  a.product_id,
+  a.customer_id,
+  a.sales,
+  b.customer_name,
+  b.age
+  from sales_2015 as a
+  left join customer_20_60 as b
+  on a.customer_id = b.customer_id
+  order by customer_id;
+  
+  
+  ----------------------------------------------------------RIGHT JOIN ------------------------------------------------
+  
+
+ /* AA-10315 not present in customer_20_60 table
+    AA-10375 present in both 
+	AA-10480  not present in sales_2015*/	
+	
+	SELECT 
+  a.order_line,
+  a.product_id,
+  a.customer_id,
+  a.sales,
+  b.customer_name,
+  b.age
+  from sales_2015 as a
+  right join customer_20_60 as b
+  on a.customer_id = b.customer_id
+  order by customer_id;
+  
+  ----------------------------------------------------------FULL OUTER JOIN ------------------------------------------------
+  
+ /* AA-10315 not present in customer_20_60 table
+    AA-10375 present in both 
+	AA-10480  not present in sales_2015*/
+	
+	
+	SELECT 
+  a.order_line,
+  a.product_id,
+  a.customer_id,
+  a.sales,
+  b.customer_name,
+  b.age
+  from sales_2015 as a
+  full join customer_20_60 as b
+  on a.customer_id = b.customer_id
+  order by customer_id;
+  
+  ---------------------------------------------------------- CROSS JOIN ------------------------------------------------------
+  CREATE TABLE month_values(mm integer);
+  create table year_values (yyyy integer);
+  
+  insert into month_values values(1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12);
+  insert into year_values  values(2011),(2012),(2013),(2014),(2015),(2016),(2017),(2018),(2019);
+  
+  select * from month_values;
+  select *from year_values;
+  
+  select a.yyyy , b.mm
+  from year_values as a , month_values as b
+  order by a.yyyy,b.mm;
+
+
+------------------------------------------------- DAY-7 ----------------------------------------------------------------------
+ 
+ /*EXCEPT*/
+ 
+ /* AA-10315 not present in customer_20_60 table
+    AA-10375 present in both 
+	AA-10480  not present in sales_2015*/
+	
+	select customer_id from sales_2015
+	except
+	select customer_id from customer_20_60
+	order by customer_id;
+	
+/*UNION*/
+
+
+ /* AA-10315 not present in customer_20_60 table
+    AA-10375 present in both 
+	AA-10480  not present in sales_2015*/
+
+
+	select customer_id from sales_2015
+	UNION
+	select customer_id from customer_20_60
+	order by customer_id;
+
+
+
+/*select l.* 
+from table l
+inner join (
+  select 
+    m_id, max(timestamp) as latest 
+  from table 
+  group by m_id
+) r
+  on l.timestamp = r.latest and l.m_id = r.m_id
+order by timestamp desc*/
+
+  
